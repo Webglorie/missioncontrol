@@ -16,13 +16,15 @@ public class Mission {
     @Column(name = "name")
     private String name;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "departure_date")
     private Date departure = new Date();
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "backonearth_date")
     private Date backOnEarth = new Date();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "mission_astronauts",
     joinColumns = { @JoinColumn(name = "mission_id")},
     inverseJoinColumns = { @JoinColumn (name = "astronaut_id")})
@@ -37,43 +39,33 @@ public class Mission {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+       return String.format(
+               "Mission[id=%d, naam='%s']",
+               id, name);
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
-        this.departure = departure;
-    }
-
     public Date getBackOnEarth() {
         return backOnEarth;
     }
 
-    public void setBackOnEarth(Date backOnEarth) {
-        this.backOnEarth = backOnEarth;
-    }
 
     public Set<Astronaut> getAstronauts() {
         return astronauts;
     }
 
-    public void setAstronauts(Set<Astronaut> astronauts) {
-        this.astronauts = astronauts;
-    }
 }

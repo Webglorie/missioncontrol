@@ -18,7 +18,7 @@ public class Astronaut {
     @Column(name = "nationality")
     private String nationality;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "astronauts")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "astronauts")
     private Set<Mission> missions = new HashSet();
 
     public Astronaut(){
@@ -30,35 +30,32 @@ public class Astronaut {
         this.nationality = nationality;
     }
 
+
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Astronaut[id=%d, naam='%s', nationality='%s']",
+                id, name, nationality);
+    }
+
     public Set<Mission> getMissions() {
         return missions;
     }
 
-    public void setMissions(Set<Mission> missions) {
-        this.missions = missions;
-    }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getNationality() {
         return nationality;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
 }
